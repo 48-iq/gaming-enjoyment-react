@@ -1,0 +1,12 @@
+.basicForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 600px;
+    padding: 30px 15px;
+    border: 3px solid black;
+    border-radius: 25px;
+    background-color: darkgrey;
+    color: white;
+}

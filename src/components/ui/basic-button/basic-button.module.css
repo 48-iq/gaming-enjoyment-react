@@ -1,0 +1,16 @@
+.basicButton {
+    background-color: gray;
+    color: white;
+    min-width: 150px;
+    height: 50px;
+    border-radius: 15px;
+    border: 3px solid black;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.basicButton:hover {
+    background-color: darkgrey;
+    color: white;
+}

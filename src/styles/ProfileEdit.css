@@ -1,0 +1,10 @@
+
+
+.profileEditMainSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 100px;
+    align-items: center;
+    padding-top: 30px;
+}

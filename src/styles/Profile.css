@@ -1,0 +1,7 @@
+.profilePageInfoSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 100px;
+    align-items: center;
+}

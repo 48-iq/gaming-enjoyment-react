@@ -1,0 +1,14 @@
+.imageInput {
+    background-color: gray;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid black;
+    padding: 5px 10px;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

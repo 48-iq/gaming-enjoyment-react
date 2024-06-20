@@ -1,0 +1,12 @@
+.gameAdminButtonPanel {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: darkgrey;
+    color: white;
+    border: black 2px solid;
+    border-radius: 15px;
+    margin-top: 10px;
+}

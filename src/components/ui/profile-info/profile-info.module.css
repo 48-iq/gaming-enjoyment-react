@@ -1,0 +1,41 @@
+.profileImage {
+    width: 180px;
+    height: 180px;
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-around;
+    width: 500px;
+    height: 260px;
+    color: white;
+    background-color: darkgrey;
+    border-radius: 15px;
+    font-size: 20px;
+    padding: 10px;
+    border: 3px solid black;
+
+}
+
+.profileRightSection {
+    display: flex;
+    flex-direction: column;
+    background-color: gray;
+    word-wrap: break-word;
+    border-radius: 15px;
+    text-align: center;
+    width: 250px;
+    border: 2px solid black;
+}
+
+.textContainer {
+    overflow-wrap: anywhere;
+}
+
+.profileLeftSection {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+}
