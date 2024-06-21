@@ -5,8 +5,6 @@ import BasicButton from "../basic-button/BasicButton";
 import cl from './game.module.css'
 const Game = ({game}) => {
     const router = useHistory();
-    console.log(game.id);
-    console.log(`/games/${game.id}`);
     return (
         <div className={cl.game}>
             {game.image === null || game.image === undefined || game.image === ''?

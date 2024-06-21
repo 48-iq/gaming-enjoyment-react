@@ -6,7 +6,7 @@ const ProfileButtonSection = () => {
     return (
         <div className={cl.profileButtonSection}>
             <Link to="/profile/games/played"><BasicButton>Играл</BasicButton></Link>
-            <BasicButton>Играю</BasicButton>
+            <Link to="/profile/games/playing"><BasicButton>Играю</BasicButton></Link>
             <Link to="/profile/edit"><BasicButton>Редактировать профиль</BasicButton></Link>
         </div>
     );

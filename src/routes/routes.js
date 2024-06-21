@@ -6,6 +6,7 @@ import GamesPlayedList from "../pages/GamesPlayedList";
 import GamesPlayingList from "../pages/GamesPlayingList";
 import GamesPage from "../pages/GamesPage";
 import GameIdPage from "../pages/GameIdPage";
+import genresPage from "../pages/GenresPage";
 
 export const routes = [
     {path: '/login', component: LoginPage, exact: true},
@@ -27,5 +28,6 @@ export const adminRoutes = [
     {path: '/profile/games/played', component: GamesPlayedList, exact: true},
     {path: '/profile/games/playing', component: GamesPlayingList, exact: true},
     {path: '/games/all', component: GamesPage, exact: true},
-    {path: '/games/:id', component: GameIdPage, exact: true}
+    {path: '/games/:id', component: GameIdPage, exact: true},
+    {path: '/genres/all', component: genresPage, exact: true}
 ]

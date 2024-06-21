@@ -14,6 +14,8 @@ import BasicSelect from "../components/ui/basic-select/BasicSelect";
 import '../styles/Games.css'
 import BasicHeader from "../components/ui/header/BasicHeader";
 import GamesAdminButtonPanel from "../components/ui/games-admin-button-panel/GamesAdminButtonPanel";
+import UserService from "../services/UserService";
+import GenreService from "../services/GenreService";
 
 
 const GamesPage = () => {
@@ -32,13 +34,15 @@ const GamesPage = () => {
     const [selectedPlatforms, setSelectedPlatforms] = useState([]);
 
     const [fetchGenres, isGenresLoading, genresError] = useFetching(async () => {
-        const response = await GameService.getGenres();
-        setGenres([...response]);
+        const response = await GenreService.getGenres();
+        setGenres([...response.data]);
+        console.log(response.data)
     })
 
     const [fetchPlatforms, isPlatformsLoading, platformsError] = useFetching(async () => {
-        const response = await GameService.getPlatforms();
-        setPlatforms([...response]);
+        const response = await GenreService.getPlatforms();
+        setPlatforms([...response.data]);
+        console.log(response.data)
     })
 
     const [games, setGames] = useState([]);
@@ -96,6 +100,28 @@ const GamesPage = () => {
         })
     }
 
+    const [addToPlayedFetching, isAddToPlaeydLoading, addToPlayedError] = useFetching(async (id) => {
+        const response = await UserService.getCurUser();
+        if (response.status === 200) {
+            const user = response.data;
+            console.log(user)
+            user.gamesPlayed = [...user.gamesPlayed, id];
+            console.log(user)
+            await UserService.updateUser(user);
+        }
+    })
+
+    const [addToPlayingFetching, isAddToPlayingLoading, addToPlayingError] = useFetching(async (id) => {
+        const response = await UserService.getCurUser();
+        if (response.status === 200) {
+            const user = response.data;
+            console.log(user)
+            user.gamesPlaying = [...user.gamesPlaying, id];
+            console.log(user)
+            await UserService.updateUser(user);
+        }
+    })
+
     return (
         <div>
             <BasicHeader/>
@@ -122,14 +148,15 @@ const GamesPage = () => {
                         )}
                     </div>
                     <p>Жанры</p>
-                    <BasicSelect onChange={(e) => {
-                        if (!selectedGenres.includes(e.target.value))
-                            setSelectedGenres([...selectedGenres, genres.filter((g) => g.title === e.target.value)[0]]);
-                    }}>
+                    <div className="optionListDiv">
                         {genres.map((genre) =>
-                            <select>{genre.title}</select>
+                            <div key={genre.id}
+                                 onClick={(e) => {
+                                     setSelectedGenres([...selectedGenres.filter((g) => g.id !== genre.id), genre]);
+                                 }}
+                            >{genre.title}</div>
                         )}
-                    </BasicSelect>
+                    </div>
 
                     <div className="optionListDiv">
                         {selectedPlatforms.map((platform) =>
@@ -138,14 +165,16 @@ const GamesPage = () => {
                         )}
                     </div>
                     <div>Платформы</div>
-                    <BasicSelect onChange={(e) => {
-                        if (!selectedPlatforms.includes(e.target.value))
-                            setSelectedGenres([...selectedPlatforms, platforms.filter((g) => g.title === e.target.value)[0]]);
-                    }}>
+
+                    <div className="optionListDiv">
                         {platforms.map((platform) =>
-                            <select>{platform.title}</select>
+                            <div key={platform.id}
+                                 onClick={(e) => {
+                                     setSelectedGenres([...selectedGenres.filter((g) => g.id !== platform.id), platform]);
+                                 }}
+                            >{platform.title}</div>
                         )}
-                    </BasicSelect>
+                    </div>
 
                     <BasicButton onClick={createFetching}>Добавить Игру</BasicButton>
                 </BasicForm>
@@ -155,8 +184,8 @@ const GamesPage = () => {
                     <div key={game.id} className="byRow">
                         <Game game={game}/>
                         <div className="byColumn">
-                            <BasicButton>Добавить в "Играл"</BasicButton>
-                            <BasicButton>Добавить в "Играю"</BasicButton>
+                            <BasicButton onClick={() => addToPlayedFetching(game.id)}>Добавить в "Играл"</BasicButton>
+                            <BasicButton onClick={() => addToPlayingFetching(game.id)}>Добавить в "Играю"</BasicButton>
                         </div>
                     </div>
                 )}

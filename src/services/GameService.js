@@ -19,6 +19,7 @@ export default class GameService {
     }
 
     static async getUserPlayedGames({userId, page, size}) {
+        console.log(userId, page, size);
         const response = await axios.get("http://localhost:8080/games/user/played", {
             params: {
                 userId: userId,
@@ -30,9 +31,13 @@ export default class GameService {
     }
 
     static async getUserPlayingGames({userId, page, size}) {
-        const response = await axios.get("http://localhost:8080/games/user/played", {},
-            {}
-        )
+        const response = await axios.get("http://localhost:8080/games/user/playing", {
+            params: {
+                userId: userId,
+                page: page,
+                size: size
+            }
+        });
         return response;
     }
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import BasicInput from "../components/ui/basic-input/BasicInput";
 import BasicButton from "../components/ui/basic-button/BasicButton";
 import BasicForm from "../components/ui/basic-form/BasicForm";
@@ -52,6 +52,10 @@ const RegisterPage = () => {
     const [fetchRegister, isLoading, err] = useFetching(async (e) => {
         await register(e);
     })
+
+    useEffect(() => {
+        localStorage.removeItem("access_token");
+    }, []);
 
 
     return (

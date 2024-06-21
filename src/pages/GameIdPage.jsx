@@ -37,8 +37,8 @@ const GameIdPage = () => {
     });
     const [platforms, setPlatforms] = useState([]);
 
-    const [selectedGenresFetching, isSelectedGenresLoading, selectedGenresError] = useFetching(async () => {
-        const response = await GenreService.getGenresByIds(game.genres);
+    const [selectedGenresFetching, isSelectedGenresLoading, selectedGenresError] = useFetching(async (genresIds) => {
+        const response = await GenreService.getGenresByIds(genresIds);
         setSelectedGenres([...response.data]);
     })
 
@@ -53,7 +53,7 @@ const GameIdPage = () => {
         setGame(response.data);
         setUpdateGame(response.data);
         platformFetching(game.platforms);
-        genreFetching(game.genres);
+        genreFetching(genresIds);
     });
 
     const [platformFetching, isPlatformLoading, platformError] = useFetching(async ({ids}) => {
@@ -93,6 +93,7 @@ const GameIdPage = () => {
                 image: reader.result
             })
             console.log(reader.result);
+            console.log("result")
         })
     }
 
@@ -134,12 +135,25 @@ const GameIdPage = () => {
 
                                 <ModalWindow isActive={modal} setIsActive={setModal}>
                                     <BasicForm>
-                                        <BasicInput value={updateGame.title? updateGame.title : ''} placeholder="название"
-                                                    onChange={(e) => setUpdateGame({...updateGame, title: e.target.value})}/>
-                                        <BasicTextArea value={updateGame.description? updateGame.description : ''} placeholder="описание"
-                                                       onChange={(e) => setUpdateGame({...updateGame, description: e.target.value})}/>
-                                        <BasicTextArea value={updateGame.systemRequirements? updateGame.systemRequirements : ''} placeholder="системные требования"
-                                                       onChange={(e) => setUpdateGame({...updateGame, systemRequirements: e.target.value})}/>
+                                        <BasicInput value={updateGame.title ? updateGame.title : ''}
+                                                    placeholder="название"
+                                                    onChange={(e) => setUpdateGame({
+                                                        ...updateGame,
+                                                        title: e.target.value
+                                                    })}/>
+                                        <BasicTextArea value={updateGame.description ? updateGame.description : ''}
+                                                       placeholder="описание"
+                                                       onChange={(e) => setUpdateGame({
+                                                           ...updateGame,
+                                                           description: e.target.value
+                                                       })}/>
+                                        <BasicTextArea
+                                            value={updateGame.systemRequirements ? updateGame.systemRequirements : ''}
+                                            placeholder="системные требования"
+                                            onChange={(e) => setUpdateGame({
+                                                ...updateGame,
+                                                systemRequirements: e.target.value
+                                            })}/>
                                         <ImageInput onChange={e => readFile(e.target.files[0])}>Логотип</ImageInput>
                                         <div className="optionListDiv">
                                             {selectedGenres.map((genre) =>
@@ -148,14 +162,15 @@ const GameIdPage = () => {
                                             )}
                                         </div>
                                         <p>Жанры</p>
-                                        <BasicSelect onChange={(e) => {
-                                            if (!selectedGenres.includes(e.target.value))
-                                                setSelectedGenres([...selectedGenres, genres.filter((g) => g.title === e.target.value)[0]]);
-                                        }}>
+                                        <div className="optionListDiv">
                                             {genres.map((genre) =>
-                                                <select>{genre.title}</select>
+                                                <div key={genre.id}
+                                                     onClick={(e) => {
+                                                         setSelectedGenres([...selectedGenres.filter((g) => g.id !== genre.id), genre]);
+                                                     }}
+                                                >{genre.title}</div>
                                             )}
-                                        </BasicSelect>
+                                        </div>
 
                                         <div className="optionListDiv">
                                             {selectedPlatforms.map((platform) =>
@@ -164,19 +179,21 @@ const GameIdPage = () => {
                                             )}
                                         </div>
                                         <div>Платформы</div>
-                                        <BasicSelect onChange={(e) => {
-                                            if (!selectedPlatforms.includes(e.target.value))
-                                                setSelectedGenres([...selectedPlatforms, platforms.filter((g) => g.title === e.target.value)[0]]);
-                                        }}>
+
+                                        <div className="optionListDiv">
                                             {platforms.map((platform) =>
-                                                <select>{platform.title}</select>
+                                                <div key={platform.id}
+                                                     onClick={(e) => {
+                                                         setSelectedGenres([...selectedGenres.filter((g) => g.id !== platform.id), platform]);
+                                                     }}
+                                                >{platform.title}</div>
                                             )}
-                                        </BasicSelect>
+                                        </div>
 
                                         <BasicButton onClick={updateFetching}>Обновить Игру</BasicButton>
                                     </BasicForm>
                                 </ModalWindow>
-                            </div>: null
+                            </div> : null
                         }
                     </div>
             }

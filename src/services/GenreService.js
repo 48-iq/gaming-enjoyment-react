@@ -6,7 +6,7 @@ export default class GenreService {
         return response;
     }
 
-    static async createGenre({genre}) {
+    static async createGenre(genre) {
         const response = await axios.post("http://localhost:8080/genres/create", genre);
         return response;
     }
@@ -16,8 +16,8 @@ export default class GenreService {
         return response;
     }
 
-    static async deleteGenre({id}) {
-        const response = await axios.delete("http://localhost:8080/genres/delete" + id);
+    static async deleteGenre(id) {
+        const response = await axios.delete("http://localhost:8080/genres/delete/" + id);
         return response;
     }
 
@@ -26,7 +26,8 @@ export default class GenreService {
         return response;
     }
 
-    static async getGenresByIds({ids}) {
+    static async getGenresByIds(ids) {
+        console.log(ids);
         const response = await axios.get("http://localhost:8080/genres/ids", {
             params: {
                 ids: ids
